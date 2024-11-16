@@ -21,38 +21,32 @@ import jakarta.persistence.JoinTable;
 public class User implements Serializable {
 
 	@SuppressWarnings("deprecation")
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
-	@GenericGenerator(name="native",strategy="native")
-	private Long id;
-	
-	@Column 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+	public Long id;
+
+	@Column
 	private String firstName;
-	@Column 
+	@Column
 	private String lastName;
-	@Column(unique = true) 
+	@Column(unique = true)
 	private String email;
-	@Column(unique = true) 
+	@Column(unique = true)
 	private String username;
 	@Column
 	private String password;
 	@Transient
 	private String confirmPassword;
 
-
-	//Definición de tabla intermedia / join
+	// Definición de tabla intermedia / join
 	@ManyToAny(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "user_roles",
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn (name = "role_id")
-	)	
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 
 	@Column
 	private Set<Role> roles;
 
-
-	//Getter & Setters
+	// Getter & Setters
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -91,6 +85,10 @@ public class User implements Serializable {
 
 	public String getUsername() {
 		return username;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
 	@Override

@@ -16,13 +16,11 @@ public class Role implements Serializable {
 
     private static final long serialVersionUID = -6833167247955613395L;
 
-
     @SuppressWarnings("deprecation")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long Id;
-
+    public Long Id;
 
     @Column
     private String name;
