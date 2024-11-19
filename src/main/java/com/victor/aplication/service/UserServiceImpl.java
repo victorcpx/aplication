@@ -42,4 +42,24 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User getUserById(Long id) throws Exception {
+        return repository.findById(id).orElseThrow(() -> new Exception ("The user does not exists."));
+    }
+
+    @Override
+    public User updateUser(User getUser) throws Exception {
+        User setUser = getUserById(getUser.getId());
+        mapUser(getUser, setUser);
+        return repository.save(setUser);
+    }
+
+    /* Map Everything but hte password */
+    protected void mapUser(User from, User to) {  
+        to.setUsername(from.getUsername());  
+        to.setFirstName(from.getFirstName());  
+        to.setLastName(from.getLastName());  
+        to.setEmail(from.getEmail());  
+        to.setRoles(from.getRoles());  
+    }
 }

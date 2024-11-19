@@ -52,7 +52,6 @@ public class User implements Serializable {
 	private String password;
 
 	@Transient
-	@NotBlank (message = "The field may not be empty")
 	private String confirmPassword;
 
 	// Definición de tabla intermedia / join
@@ -64,6 +63,10 @@ public class User implements Serializable {
 	// Getter & Setters
 	
 
+	public Long getId() {
+		return id;
+	}
+	
     public Set<Role> getRoles() {
         return roles;
     }
