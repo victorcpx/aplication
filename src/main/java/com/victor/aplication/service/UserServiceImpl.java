@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.victor.aplication.dto.ChangePasswordForm;
 import com.victor.aplication.entity.User;
 import com.victor.aplication.repository.UserRepository;
 
@@ -66,6 +67,27 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) throws Exception {
         User user = getUserById(id);
         repository.delete(user);
+    }
+
+    @Override
+    public User changePassword(ChangePasswordForm form) throws Exception {
+        User user = getUserById(form.getId());
+
+        if (!user.getPassword().equals(form.getCurrentPassword())){
+            throw new Exception("Invalid current password");
+        }
+
+        if (user.getPassword().equals(form.getNewPassword())){
+            throw new Exception("The new password can be the same as the former one");
+        }
+
+
+        if (!form.getNewPassword().equals(form.getConfirmPassword())){
+            throw new Exception("The new password does not match with its confirmation");
+        }
+
+        user.setPassword(form.getNewPassword());
+        return repository.save(user);
     }
 
 }
